@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<style>
+  h3 {
+    font-family: Arial, Garamond, serif;
+    font-size: 16px;
+    color: #7a5600;
+  }
+  p {
+    font-family: Arial, Garamond, serif;
+    font-size: 15px;
+    color: #72aba4;
+  }
+</style>
+<body>
+{{^user}}
+<form action="/login" method="post">
+    <input type="text" placeholder="Enter your name" name="name"/>
+    <button type="submit">Login</button>
+</form>
+{{/user}}
+
+{{#user}}
+Welcome, {{name}}!<br>
+<form action="/logout" method="post">
+    <button type="submit">Logout</button>
+</form>
+<div>
+<br>
+<form action="/create-event" method="post">
+    <input type="text" placeholder="Description" name="description" size="50"/>
+    Start time
+    <input type="datetime-local" name="startDateTime" value="{{now}}"/>
+    End Time
+    <input type="datetime-local" name="endDateTime" value="{{now}}"/>
+    <button type="submit">Add Event</button>
+</form>
+<br>
+</div>
+<!-- if (username or user id = current session, display events) -->
+<h3>{{name}}, here are all of your events:</h3>
+<p>
+{{#userEvents}}
+    {{description}} Event starts at: {{startDateTime}} Event ends at: {{endDateTime}}<br>
+{{/userEvents}}
+{{/user}}
+</p>
+<!-- Display all events: -->
+<h3>Here are all of the upcoming events:</h3>
+<p>
+    {{#events}}
+{{description}} Event starts at: {{startDateTime}} Event ends at: {{endDateTime}}<br>
+    {{/events}}</p>
+</body>
+</html>
